@@ -210,7 +210,13 @@ app.get("/newcollections", async (req, res) => {
   let products = await Product.find({});
   let newcollection = products.slice(1).slice(-8);
   console.log("NewCollection fetched");
-  res.send(newcollection)
+  res.send(newcollection);
+});
+
+// creating endpoint for popular in women section
+
+app.get("/popularinwomen", async (req, res) => {
+  let products = await Product.find({ category: "women" });
 });
 
 app.listen(port, (error) => {
