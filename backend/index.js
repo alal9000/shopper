@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cors());
 
 mongoose
-  .connect("mongodb://localhost/ecommerce")
+  .connect("mongodb+srv://lucidlear:Pooper45@cluster0.dsyfkgv.mongodb.net/shopper")
   .then(() => console.log("connected to mongoDB.."))
   .catch((err) => console.log("could not connect to mongoDB..", err));
 
