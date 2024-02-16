@@ -3,7 +3,9 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+const cloudinary = require('cloudinary').v2;
 const multer = require("multer");
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const path = require("path");
 const cors = require("cors");
 const { request } = require("http");
@@ -16,6 +18,12 @@ mongoose
   .then(() => console.log("connected to mongoDB.."))
   .catch((err) => console.log("could not connect to mongoDB..", err));
 
+  cloudinary.config({
+    cloud_name: 'Aaron',
+    api_key: '876565983349347',
+    api_secret: 'dWrjR9IfOedjRrS-dmbM9_6dYkc'
+  });
+
 // API Creation
 
 app.get("/", (req, res) => {
@@ -24,25 +32,27 @@ app.get("/", (req, res) => {
 
 // Image storage engine
 
-const storage = multer.diskStorage({
-  destination: "./upload/images",
-  filename: (req, file, cb) => {
-    return cb(
-      null,
-      `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`
-    );
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'upload', 
+    resource_type: 'auto'
   }
 });
 
 const upload = multer({ storage: storage });
 
 // creating upload endpoint for images
-app.use("/images", express.static("upload/images"));
+app.get("/images/:filename", (req, res) => {
+  const { filename } = req.params;
+  const image_url = cloudinary.url(filename);
+  res.redirect(image_url);
+});
 
 app.post("/upload", upload.single("product"), (req, res) => {
   res.json({
     success: 1,
-    image_url: `http://localhost:${port}/images/${req.file.filename}`
+    image_url: req.file.path
   });
 });
 

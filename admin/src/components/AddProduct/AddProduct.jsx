@@ -26,7 +26,7 @@ const AddProduct = () => {
     let product = productDetails;
 
     let formData = new FormData();
-    formData.append("product", image);
+    formData.append("file", image);
 
     await fetch("http://localhost:4000/upload", {
       method: "POST",
