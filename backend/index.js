@@ -3,30 +3,32 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require("cloudinary").v2;
 const multer = require("multer");
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cors = require("cors");
 
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://shopper-v8sa.vercel.app/"],
+    origin: ["https://shopper-v8sa.vercel.app"],
     methods: ["POST", "GET"],
     credentials: true
   })
 );
 
 mongoose
-  .connect("mongodb+srv://lucidlear:Pooper45@cluster0.dsyfkgv.mongodb.net/shopper")
+  .connect(
+    "mongodb+srv://lucidlear:Pooper45@cluster0.dsyfkgv.mongodb.net/shopper"
+  )
   .then(() => console.log("connected to mongoDB.."))
   .catch((err) => console.log("could not connect to mongoDB..", err));
 
-  cloudinary.config({
-    cloud_name: 'dl7pu6laa',
-    api_key: '876565983349347',
-    api_secret: 'dWrjR9IfOedjRrS-dmbM9_6dYkc'
-  });
+cloudinary.config({
+  cloud_name: "dl7pu6laa",
+  api_key: "876565983349347",
+  api_secret: "dWrjR9IfOedjRrS-dmbM9_6dYkc"
+});
 
 // API Creation
 
@@ -39,8 +41,8 @@ app.get("/", (req, res) => {
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'upload', 
-    resource_type: 'auto'
+    folder: "upload",
+    resource_type: "auto"
   }
 });
 
@@ -62,7 +64,10 @@ app.post("/upload", upload.single("file"), async (req, res) => {
     });
   } catch (error) {
     console.error("Error uploading image to Cloudinary:", error);
-    res.json({ success: false, message: "Failed to upload image to Cloudinary" });
+    res.json({
+      success: false,
+      message: "Failed to upload image to Cloudinary"
+    });
   }
 });
 
