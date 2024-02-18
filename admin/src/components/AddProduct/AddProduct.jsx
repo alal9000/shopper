@@ -23,8 +23,8 @@ const AddProduct = () => {
   const addProduct = async () => {
     let formData = new FormData();
     formData.append("file", image);
-    
-    await fetch("https://shopper-delta.vercel.app/upload", {
+
+    await fetch("https://shopper-backend-nu.vercel.app/upload", {
       method: "POST",
       body: formData
     })
@@ -32,7 +32,7 @@ const AddProduct = () => {
       .then(async (data) => {
         if (data.success) {
           const product = { ...productDetails, image: data.image_url };
-          await fetch("https://shopper-delta.vercel.app/addproduct", {
+          await fetch("https://shopper-backend-nu.vercel.app/addproduct", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"

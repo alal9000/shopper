@@ -16,19 +16,19 @@ const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState(getDefaultCart());
 
   useEffect(() => {
-    fetch("https://shopper-delta.vercel.app/allproducts")
+    fetch("https://shopper-backend-nu.vercel.app/allproducts")
       .then((res) => res.json())
       .then((data) => setAll_Product(data));
 
     if (localStorage.getItem("auth-token")) {
-      fetch("https://shopper-delta.vercel.app/getcart", {
+      fetch("https://shopper-backend-nu.vercel.app/getcart", {
         method: "POST",
         headers: {
           Accept: "application/form-data",
           "auth-token": `${localStorage.getItem("auth-token")}`,
           "Content-Type": "application/json"
         },
-        body: "",
+        body: ""
       })
         .then((res) => res.json())
         .then((data) => setCartItems(data));
@@ -38,7 +38,7 @@ const ShopContextProvider = (props) => {
   const addToCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
     if (localStorage.getItem("auth-token")) {
-      fetch("https://shopper-delta.vercel.app/addtocart", {
+      fetch("https://shopper-backend-nu.vercel.app/addtocart", {
         method: "POST",
         headers: {
           Accept: "application/form-data",
@@ -55,7 +55,7 @@ const ShopContextProvider = (props) => {
   const removeFromCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
     if (localStorage.getItem("auth-token")) {
-      fetch("https://shopper-delta.vercel.app/removefromcart", {
+      fetch("https://shopper-backend-nu.vercel.app/removefromcart", {
         method: "POST",
         headers: {
           Accept: "application/form-data",

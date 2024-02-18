@@ -17,7 +17,7 @@ const LoginSignup = () => {
     console.log("Login function executed", formData);
     let responseData;
 
-    await fetch("https://shopper-delta.vercel.app/login", {
+    await fetch("https://shopper-backend-nu.vercel.app/login", {
       method: "POST",
       headers: {
         Accept: "application/form-data",
@@ -31,9 +31,8 @@ const LoginSignup = () => {
     if (responseData.success) {
       localStorage.setItem("auth-token", responseData.token);
       window.location.replace("/");
-    }
-    else {
-      alert(responseData.errors)
+    } else {
+      alert(responseData.errors);
     }
   };
 
@@ -41,7 +40,7 @@ const LoginSignup = () => {
     console.log("signup function executed", formData);
     let responseData;
 
-    await fetch("https://shopper-delta.vercel.app/signup", {
+    await fetch("https://shopper-backend-nu.vercel.app/signup", {
       method: "POST",
       headers: {
         Accept: "application/form-data",
@@ -55,9 +54,8 @@ const LoginSignup = () => {
     if (responseData.success) {
       localStorage.setItem("auth-token", responseData.token);
       window.location.replace("/");
-    }
-    else {
-      alert(responseData.errors)
+    } else {
+      alert(responseData.errors);
     }
   };
 
