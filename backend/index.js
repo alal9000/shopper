@@ -1,3 +1,4 @@
+require("dotenv").config();
 const port = 4000;
 const express = require("express");
 const app = express();
@@ -11,23 +12,21 @@ const cors = require("cors");
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://shopper-v8sa.vercel.app"],
+    origin: [process.env.REACT_URL],
     methods: ["POST", "GET"],
     credentials: true
   })
 );
 
 mongoose
-  .connect(
-    "mongodb+srv://lucidlear:Pooper45@cluster0.dsyfkgv.mongodb.net/shopper"
-  )
+  .connect(process.env.DATABASE_URL)
   .then(() => console.log("connected to mongoDB.."))
   .catch((err) => console.log("could not connect to mongoDB..", err));
 
 cloudinary.config({
-  cloud_name: "dl7pu6laa",
-  api_key: "876565983349347",
-  api_secret: "dWrjR9IfOedjRrS-dmbM9_6dYkc"
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
 // API Creation
