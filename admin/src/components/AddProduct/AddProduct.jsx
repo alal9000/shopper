@@ -21,40 +21,38 @@ const AddProduct = () => {
   };
 
   const addProduct = async () => {
-    console.log(productDetails);
-    let responseData;
-    let product = productDetails;
-
     let formData = new FormData();
     formData.append("file", image);
-
-    await fetch("http://localhost:4000/upload", {
+    
+    await fetch("https://shopper-delta.vercel.app/upload", {
       method: "POST",
-      headers: {
-        Accept: "application/json"
-      },
       body: formData
     })
-      .then((resp) => resp.json())
+      .then((res) => res.json())
       .then(async (data) => {
-        responseData = data;
-
-        if (responseData.success) {
-          product.image = responseData.image_url;
-          console.log(product);
-          await fetch("http://localhost:4000/addproduct", {
+        if (data.success) {
+          const product = { ...productDetails, image: data.image_url };
+          await fetch("https://shopper-delta.vercel.app/addproduct", {
             method: "POST",
             headers: {
-              Accept: "application/json",
               "Content-Type": "application/json"
             },
             body: JSON.stringify(product)
           })
             .then((resp) => resp.json())
             .then((data) => {
-              data.success ? alert("product added") : alert("failed");
+              if (data.success) {
+                alert("Product added successfully");
+              } else {
+                alert("Failed to add product");
+              }
             });
+        } else {
+          alert("Failed to upload image");
         }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
       });
   };
 

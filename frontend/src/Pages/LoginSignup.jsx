@@ -17,7 +17,7 @@ const LoginSignup = () => {
     console.log("Login function executed", formData);
     let responseData;
 
-    await fetch("http://localhost:4000/login", {
+    await fetch("https://shopper-delta.vercel.app/login", {
       method: "POST",
       headers: {
         Accept: "application/form-data",
@@ -41,7 +41,7 @@ const LoginSignup = () => {
     console.log("signup function executed", formData);
     let responseData;
 
-    await fetch("http://localhost:4000/signup", {
+    await fetch("https://shopper-delta.vercel.app/signup", {
       method: "POST",
       headers: {
         Accept: "application/form-data",
