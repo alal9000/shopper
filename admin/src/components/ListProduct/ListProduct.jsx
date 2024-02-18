@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./ListProduct.css";
-import cross_icon from "../../assets/cross_icon.png";
 
 const ListProduct = () => {
   const [allproducts, setAllProducts] = useState([]);
@@ -60,7 +59,7 @@ const ListProduct = () => {
                 <p>${product.category}</p>
                 <img
                   className="listproduct-remove-icon"
-                  src={cross_icon}
+                  src={null}
                   alt=""
                   onClick={() => removeProduct(product.id)}
                 />
